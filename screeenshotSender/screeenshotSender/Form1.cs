@@ -15,24 +15,16 @@ namespace screeenshotSender
         public Form1()
         {
             InitializeComponent();
-            #warning Удалить следующие две строки, когда закончим.
-            Form2 fr = new Form2();
-            fr.Show();
-        }
-
-        public void generateSettings()
-        {
-            FileStream fs = new FileStream(Directory.GetCurrentDirectory()+@"/settings.cfg", FileMode.CreateNew, FileAccess.Write);
-            StreamWriter sr = new StreamWriter(fs);
-            sr.WriteLine("folder=" + Directory.GetCurrentDirectory());
-            sr.WriteLine("alwaysDisplay=true");
-            sr.WriteLine("timeout=2");
-          
+            notifyIcon1.ShowBalloonTip(50000, "TEST", "tipText", ToolTipIcon.Error);
+            ContextMenu cm = new ContextMenu();
+            MenuItem[] mn = new MenuItem[3];
+            notifyIcon1.ContextMenu = cm;
+            this.WindowState = FormWindowState.Minimized;
+            this.Visible = false;
+            this.Hide();
         }
         private void connect()
         { 
         }
-        
-
     }
 }
