@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageLD.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="Screenshot.cs">
       <SubType>Form</SubType>
@@ -54,7 +56,6 @@
       <DependentUpon>Screenshot.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="StringFormer.cs" />
     <Compile Include="Friend.cs" />
     <Compile Include="NetManager.cs" />
     <Compile Include="Packet.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -100,6 +102,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notwatched.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\receiving.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sending.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -19,14 +19,16 @@ namespace screeenshotSender
         public int timeoutSeconds;
         public int port;
         public string nick;
+        public int saveScreens;
 
-        public Settings(string path, bool showNotificationImmideatly, int timeoutSeconds, int port, string nick)
+        public Settings(string path, bool showNotificationImmideatly, int timeoutSeconds, int port, string nick, int saveScreens)
         {
-            this.path = path;
+            this.path = cleanString(path);
             this.showNotificationImmideatly = showNotificationImmideatly;
             this.timeoutSeconds = timeoutSeconds;
             this.port = port;
-            this.nick = nick;
+            this.nick = cleanString(nick);
+            this.saveScreens = saveScreens;
         }
 
         public static Settings loadSetting(string path)
@@ -46,6 +48,7 @@ namespace screeenshotSender
                 int tTimeOut = 0;
                 int port = 4567;
                 string nick = "";
+                int saveScreens = 4;
 
                 for (int i = 0; i < tempLine.Length; i++)
                 {
@@ -70,12 +73,16 @@ namespace screeenshotSender
                     {
                         nick = values[1];
                     }
+                    if (values[0].Equals("saveScreens"))
+                    {
+                        saveScreens = Int32.Parse(values[1]);
+                    }
                 }
-                Settings tempSet = new Settings(tPath, tShowNotImm, tTimeOut, port, nick);
+                Settings tempSet = new Settings(tPath, tShowNotImm, tTimeOut, port, nick, saveScreens);
                 return tempSet;
 
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                
                 return null;
@@ -93,12 +100,20 @@ namespace screeenshotSender
                 sw.WriteLine("timeoutSeconds=" + timeoutSeconds);
                 sw.WriteLine("port=" + port);
                 sw.WriteLine("nick=" + nick);
+                sw.WriteLine("saveScreens=" + saveScreens);
                 sw.Close();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.ToString() + "\n\n" + exc.Message);
             }
+        }
+
+        private string cleanString(string par1)
+        {
+            string result = par1.Replace("\n", "");
+            result = result.Replace("\r", "");
+            return result;
         }
     }
 }

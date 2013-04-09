@@ -38,6 +38,7 @@
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(927, 664);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
@@ -48,6 +49,7 @@
             this.ClientSize = new System.Drawing.Size(927, 664);
             this.Controls.Add(this.pictureBox);
             this.Name = "Screenshot";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Screenshot";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);

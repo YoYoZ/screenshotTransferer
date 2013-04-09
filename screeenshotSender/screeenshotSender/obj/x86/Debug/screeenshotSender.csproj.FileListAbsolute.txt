@@ -1,3 +1,5 @@
+C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\bin\Debug\screeenshotSender.exe
+C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\bin\Debug\screeenshotSender.pdb
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\screeenshotSender.Screenshot.resources
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\screeenshotSender.ScreenShower.resources
@@ -5,7 +7,5 @@ C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\scre
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\screeenshotSender.Properties.Resources.resources
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\bin\Debug\screeenshotSender.exe
-C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\bin\Debug\screeenshotSender.pdb
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\screeenshotSender.exe
 C:\Users\АНТОН\Documents\GitHub\screenshotTransferer\screeenshotSender\screeenshotSender\obj\x86\Debug\screeenshotSender.pdb

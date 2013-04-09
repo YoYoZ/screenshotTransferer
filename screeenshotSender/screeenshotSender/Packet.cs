@@ -42,13 +42,32 @@ namespace screeenshotSender
         public Packet002Screenshot(Image im)
         {
             MemoryStream ms = new MemoryStream();
-            im.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            im.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
             bytes = ms.ToArray();
         }
 
         public override void performPacket(NetManager manager)
         {
-            manager.Screenshotshot(this);
+            manager.showScreenshot(this);
+        }
+    }
+
+    [Serializable]
+    public class Packet003PingCalculator : Packet
+    {
+
+        public DateTime timeMilles;
+        public bool direction;
+
+        public Packet003PingCalculator()
+        {
+            direction = true;
+            timeMilles = DateTime.Now;
+        }
+
+        public override void performPacket(NetManager manager)
+        {
+            manager.calcPing(this);
         }
     }
 }

@@ -20,8 +20,6 @@ namespace screeenshotSender
 
         private string name;
 
-        public static bool isUserActive;
-
         private NetManager nm;
 
         private Thread accepterThread;
@@ -42,8 +40,8 @@ namespace screeenshotSender
                 Usocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Usocket.Bind(ip);
                 Usocket.Listen(Int32.MaxValue);
-                isUserActive = true;
                 accepterThread = new Thread(this.startAccepting);
+                accepterThread.Name = "Thread Accepter for Local User";
                 accepterThread.Start();
                 return true;
             }
@@ -57,7 +55,7 @@ namespace screeenshotSender
         private void startAccepting()
         {
 
-            while (isUserActive)
+            while (NetManager.isManagerAlive)
             {
                 Socket socket = Usocket.Accept();
                 Friend fr = new Friend(socket, nm);
@@ -67,6 +65,11 @@ namespace screeenshotSender
         public string getName()
         {
             return name;
+        }
+
+        public void setUsername(string username)
+        {
+            this.name = username;
         }
     }
 }

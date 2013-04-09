@@ -31,7 +31,11 @@ namespace screeenshotSender
 
         private NetManager nm;
 
-        private string fName;
+        private string fName = "NOT SET YET";
+
+        private int numberOfFailedPackets;
+
+        private string status = "NOT UPDATED";
 
         public Friend(string address, int port, NetManager manager)
         {
@@ -46,10 +50,22 @@ namespace screeenshotSender
             this.fSocket = socket;
             netStream = new NetworkStream(fSocket);
             binFor = new BinaryFormatter();
+            numberOfFailedPackets = 0;
             isFriendAlive = true;
             packetReceiver = new Thread(this.readPackets);
+            packetReceiver.Name = "Packet Receiver for " + getLocalAddress();
             packetReceiver.Start();
             this.nm = manager;
+        }
+
+        public string getLocalAddress()
+        {
+            return address;
+        }
+
+        public string getRemoteIP()
+        {
+            return fSocket.RemoteEndPoint.ToString().Split(':')[0];
         }
 
         public bool connectToFriend()
@@ -64,6 +80,7 @@ namespace screeenshotSender
                 {
                     netStream = new NetworkStream(fSocket);
                     isFriendAlive = true;
+                    numberOfFailedPackets = 0;
                     packetReceiver = new Thread(this.readPackets);
                     packetReceiver.Start();
                     return true;
@@ -99,14 +116,18 @@ namespace screeenshotSender
                         {
                             try
                             {
+                                nm.getScreenShower().changeIcon(ScreenShower.StateofIcon.sending);
                                 binFor.Serialize(netStream, p);
+                                nm.getScreenShower().changeIcon(ScreenShower.StateofIcon.normal);
                             }
                             catch (Exception exc)
                             {
+                                StreamError();
                                 Console.WriteLine("Error: " + exc.ToString());
                             }
                         }
                     });
+                th.Name = "Thread Packet sender for " + getFriendName();
                 th.Start();
             }
         }
@@ -128,14 +149,49 @@ namespace screeenshotSender
                 try
                 {
                     Packet p = (Packet)binFor.Deserialize(netStream);
+                    nm.getScreenShower().changeIcon(ScreenShower.StateofIcon.receiving);
                     p.setOwner(this);
                     p.performPacket(nm);
+                    nm.getScreenShower().changeIcon(ScreenShower.StateofIcon.normal);
                 }
                 catch (Exception exc)
                 {
                     Console.WriteLine("Error: " + exc.ToString());
                 }
             }
+        }
+
+        private void StreamError()
+        {
+            ++numberOfFailedPackets;
+            if (numberOfFailedPackets >= 5)
+                nm.connectionError(this);
+
+        }
+
+        public void setStatus(string status)
+        {
+            this.status = "";
+            this.status = fName + " | " + status;
+        }
+
+        public string getStatus()
+        {
+            return status;
+        }
+
+        public void UpdateStatus(long ping)
+        {
+            this.status = "";
+            this.status = fName + " | ";
+            this.status += fSocket.RemoteEndPoint.ToString() + " | ";
+            this.status += ping + " ms | ";
+            this.status += "Активен";
+        }
+
+        public bool isAlive()
+        {
+            return isFriendAlive;
         }
     }
 }
