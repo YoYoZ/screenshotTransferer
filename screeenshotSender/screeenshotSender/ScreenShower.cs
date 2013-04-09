@@ -28,23 +28,22 @@ namespace screeenshotSender
         public bool isNotWatched;
 
 
-        private bool isLeftMouseDown;
-        private Image selectedImage;
+        private Image selectedImage, imageClone;
+        private Graphics g;
         private int x0, y0, x, y;
+        private Rectangle r;
 
         public ScreenShower()
-        {  
-            Type t = typeof(Icon);
+        {
             InitializeComponent();
             settings = Settings.loadSetting(Directory.GetCurrentDirectory() + "\\settings.cfg");
             if (settings == null)
             {
                 settings = new Settings(Directory.GetCurrentDirectory(), true, 2, 4567, "Nickname", 4);
             }
-            AppIcon.Visible = true;
             log = new Logger(settings.path, true);
-            log.writeParamToLog("Program Initialized succesfully");
-            
+            log.writeParamToLog("Program is loading...");
+            AppIcon.Visible = true;
             normalIcon = screeenshotSender.Properties.Resources.normal;
             notWatchedIcon = screeenshotSender.Properties.Resources.notwatched;
             receivingIcon = screeenshotSender.Properties.Resources.receiving;
@@ -117,6 +116,7 @@ namespace screeenshotSender
                     nm.startUpdater();
                     nm.loadAndConnectToFriends();
                 }
+                log.writeParamToLog("Program initializated!");
         }
 
         public void displayIconNotification(string name,string message)
@@ -129,12 +129,10 @@ namespace screeenshotSender
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
 
-                    log.writeParamToLog("screenshot sent " + nm.getFriendsCount() + " friends");
+                    log.writeParamToLog("Screenshot sent " + nm.getFriendsCount() + " friends");
                     ScreenCapture sc = new ScreenCapture();
-                    Bitmap temp = new Bitmap(sc.CaptureScreen());
-                    ImageLD ld = new ImageLD();
-                    pictureBox1.Image = ld.SetBrightness(-100, temp);
-                    showScreenCutter();
+                    selectedImage = sc.CaptureScreen();
+                    showEditor();
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Middle)
             {
@@ -149,29 +147,99 @@ namespace screeenshotSender
             nm.updateUsername(settings.nick);
         }
 
-        public void showScreenCutter()
+        private void showEditor()
         {
+            this.Opacity = 100;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
-            this.Opacity = 100;
             this.BringToFront();
+            timer1.Start();
         }
 
-        private void updateDrawing(object sender, EventArgs e)
+        private void closeEditor()
         {
-            isLeftMouseDown = MouseButtons == System.Windows.Forms.MouseButtons.Left;
-            
-            pictureBox1.Image = selectedImage;
-            Graphics g = Graphics.FromImage(selectedImage);
-            if (isLeftMouseDown)
+            timer1.Stop();
+            this.Opacity = 0;
+            this.AppIcon.Visible = true;
+            g = null;
+            selectedImage = null;
+            imageClone = null;
+            x0 = 0;
+            y0 = 0;
+            x = 0;
+            y = 0;
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                
+                this.x0 = e.X;
+                this.y0 = e.Y;
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                bool var1 = r.Contains(new Point(e.X, e.Y));
+                if (var1)
+                {
+                   Bitmap original = new Bitmap(selectedImage);
+                   Bitmap areaofOriginal = original.Clone(r, original.PixelFormat);
+                   Image im = Image.FromHbitmap(areaofOriginal.GetHbitmap());
+                   DialogResult dr = MessageBox.Show(this,  "Послать скриншот " + nm.getFriendsCount() + " друзьям?" , "СкриншотоПосылатель 3000", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        nm.sendScreen(im);
+                    }
+
+                }
+                closeEditor();
             }
         }
 
-        private void mouseCliecked(object sender, EventArgs e)
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            this.x = e.X;
+            this.y = e.Y;
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (MouseButtons == System.Windows.Forms.MouseButtons.Left)
+            {
+                imageClone = (Image)selectedImage.Clone();
+                g = Graphics.FromImage(imageClone);
+                this.pictureBox1.Image = imageClone;
+
+                if (x0 != 0 && y0 != 0)
+                {
+                    Rectangle var1;
+                    r = new Rectangle(x0, y0, x - x0, y - y0);
+                    g.DrawRectangle(Pens.Blue, r);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                var1 = new Rectangle(0, 0, x0, imageClone.Height);
+                                g.FillRectangle(Brushes.Blue, var1);
+                                break;
+                            case 1:
+                                var1 = new Rectangle(0, 0, imageClone.Width, y0);
+                                g.FillRectangle(Brushes.Bisque, var1);
+                                break;
+                            case 2:
+                                var1 = new Rectangle(x0 + (x - x0), 0, imageClone.Width, imageClone.Height);
+                                g.FillRectangle(Brushes.Cyan, var1);
+                                break;
+                            case 3:
+                                var1 = new Rectangle(0, y0 + (y - y0), imageClone.Width, imageClone.Height);
+                                g.FillRectangle(Brushes.Red, var1);
+                                break;
+                        }
+                    }
+                    this.Refresh();
+                }
+            }
         }
     }
 }

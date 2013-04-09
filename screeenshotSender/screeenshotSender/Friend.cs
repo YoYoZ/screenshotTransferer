@@ -39,7 +39,7 @@ namespace screeenshotSender
 
         public Friend(string address, int port, NetManager manager)
         {
-            this.address = address;
+            this.address = address.Replace("\n", "").Replace("\r", "");
             this.port = port;
             binFor = new BinaryFormatter();
             this.nm = manager;
