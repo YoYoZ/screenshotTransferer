@@ -48,24 +48,24 @@
             this.выходToolStripMenuItem,
             this.Exit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 54);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(133, 54);
             // 
             // Setting
             // 
             this.Setting.Name = "Setting";
-            this.Setting.Size = new System.Drawing.Size(134, 22);
+            this.Setting.Size = new System.Drawing.Size(132, 22);
             this.Setting.Text = "Настройки";
             this.Setting.Click += new System.EventHandler(this.Settings_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(131, 6);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(129, 6);
             // 
             // Exit
             // 
             this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(134, 22);
+            this.Exit.Size = new System.Drawing.Size(132, 22);
             this.Exit.Text = "Выход";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -83,12 +83,13 @@
             this.pictureBox1.Size = new System.Drawing.Size(591, 427);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.mouseCliecked);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // timer1
             // 
             this.timer1.Interval = 10;
-            this.timer1.Tick += new System.EventHandler(this.updateDrawing);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ScreenShower
             // 
