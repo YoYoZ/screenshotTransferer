@@ -37,9 +37,9 @@ namespace screeenshotSender
 
         private string status = "NOT UPDATED";
 
-        public Friend(string address, int port, NetManager manager)
+        public Friend(string par1, int port, NetManager manager)
         {
-            this.address = address.Replace("\n", "").Replace("\r", "");
+            this.address = par1.Replace("\n", "").Replace("\r", "");
             this.port = port;
             binFor = new BinaryFormatter();
             this.nm = manager;
@@ -56,6 +56,7 @@ namespace screeenshotSender
             packetReceiver.Name = "Packet Receiver for " + getLocalAddress();
             packetReceiver.Start();
             this.nm = manager;
+            this.address = fSocket.RemoteEndPoint.ToString().Split(':')[0];
         }
 
         public string getLocalAddress()

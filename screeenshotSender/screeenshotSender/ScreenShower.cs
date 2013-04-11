@@ -189,6 +189,7 @@ namespace screeenshotSender
                     if (dr == System.Windows.Forms.DialogResult.Yes)
                     {
                         nm.sendScreen(im);
+                        log.writeParamToLog("INFO " + "Weight= " + r.Width + " Height= " + r.Height);
                     }
 
                 }
@@ -212,31 +213,8 @@ namespace screeenshotSender
 
                 if (x0 != 0 && y0 != 0)
                 {
-                    Rectangle var1;
                     r = new Rectangle(x0, y0, x - x0, y - y0);
                     g.DrawRectangle(Pens.Blue, r);
-                    for (int i = 0; i < 4; i++)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                var1 = new Rectangle(0, 0, x0, imageClone.Height);
-                                g.FillRectangle(Brushes.Blue, var1);
-                                break;
-                            case 1:
-                                var1 = new Rectangle(0, 0, imageClone.Width, y0);
-                                g.FillRectangle(Brushes.Bisque, var1);
-                                break;
-                            case 2:
-                                var1 = new Rectangle(x0 + (x - x0), 0, imageClone.Width, imageClone.Height);
-                                g.FillRectangle(Brushes.Cyan, var1);
-                                break;
-                            case 3:
-                                var1 = new Rectangle(0, y0 + (y - y0), imageClone.Width, imageClone.Height);
-                                g.FillRectangle(Brushes.Red, var1);
-                                break;
-                        }
-                    }
                     this.Refresh();
                 }
             }

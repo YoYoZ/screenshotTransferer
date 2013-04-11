@@ -28,7 +28,7 @@ namespace screeenshotSender
                 sr.Flush();
             }
         }
-        public void writeParamToLog(string[] input, modes m, char customSeparator = ' ')
+        public void writeParamToLog(string[] input, modes m = modes.WriteInLine, char customSeparator = ' ')
         {
             if (debug)
             {

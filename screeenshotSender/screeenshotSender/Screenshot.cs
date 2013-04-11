@@ -16,6 +16,8 @@ namespace screeenshotSender
             InitializeComponent();
             pictureBox.Image = im;
             this.Text = "Скриншот от " + username;
+            this.SetDesktopBounds(0, 0, im.Width, im.Height);
+            this.Update();
             this.Refresh();
         }
     }
